@@ -20,20 +20,20 @@ async def send_text_to_room(client, room_id, message, markdown_convert=True):
         markdown_convert (bool): Whether to convert the message content to markdown.
             Defaults to true.
     """
-    formatted = message
+    content = {
+        "msgtype": "m.text",
+        "format": "org.matrix.custom.html",
+        "body": message,
+    }
+
     if markdown_convert:
-        formatted = markdown(message)
+        content["formatted_body"] = markdown(message)
 
     try:
         await client.room_send(
             room_id,
             "m.room.message",
-            {
-                "msgtype": "m.text",
-                "format": "org.matrix.custom.html",
-                "body": message,
-                "formatted_body": formatted,
-            }
+            content,
         )
     except SendRetryError:
         logger.exception(f"Unable to send message response to {room_id}")
