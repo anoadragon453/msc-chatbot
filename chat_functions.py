@@ -7,7 +7,7 @@ from markdown import markdown
 logger = logging.getLogger(__name__)
 
 
-async def send_text_to_room(client, room_id, message, markdown_convert=True):
+async def send_text_to_room(client, room_id, message, notice=False, markdown_convert=True):
     """Send text to a matrix room
 
     Args:
@@ -17,11 +17,16 @@ async def send_text_to_room(client, room_id, message, markdown_convert=True):
 
         message (str): The message content
 
+        notice (bool): Whether the message should be sent with an "m.notice" message type
+
         markdown_convert (bool): Whether to convert the message content to markdown.
-            Defaults to true.
+            Defaults to true
     """
+    # Determine whether to ping room members or not
+    msgtype = "m.notice" if notice else "m.text"
+
     content = {
-        "msgtype": "m.text",
+        "msgtype": msgtype,
         "format": "org.matrix.custom.html",
         "body": message,
     }

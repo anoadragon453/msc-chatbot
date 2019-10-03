@@ -46,5 +46,6 @@ class Message(object):
 
         if links:
             response_content = "\n\n".join(links)
-            await send_text_to_room(self.client, self.room.room_id, response_content)
+            await send_text_to_room(self.client, self.room.room_id, response_content,
+                                    notice=True)
 
