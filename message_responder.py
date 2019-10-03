@@ -35,18 +35,17 @@ class Message(object):
 
     async def _link_mscs(self):
         """Post a link to any mentioned MSCs"""
-        response_content = ""
+        links = []
         for match in self.msc_number_regex.finditer(self.message_content):
             # Extract issue number from MSC ID
             logger.debug("Got match: %s", match.group())
             match_text = match.group()
             msc_num = match_text[3:]
 
-            link = f"{self.config.project_url}/issues/{msc_num}\n"
+            links.append(f"{self.config.project_url}/issues/{msc_num}")
 
-            response_content += link
-
-        if response_content:
+        if links:
+            response_content = "\n\n".join(links)
             await send_text_to_room(self.client, self.room.room_id, response_content,
                                     markdown_convert=False)
 
