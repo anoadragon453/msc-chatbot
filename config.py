@@ -67,3 +67,9 @@ class Config(object):
             raise ConfigError("matrix.homeserver_url is a required field")
 
         self.command_prefix = config.get("command_prefix", "!c") + " "
+
+        # Github setup
+        github = config.get("github", {})
+        self.project_url = github.get(
+            "project_url", "https://github.com/matrix-org/matrix-doc"
+        )
