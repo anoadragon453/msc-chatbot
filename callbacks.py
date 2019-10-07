@@ -20,7 +20,7 @@ class Callbacks(object):
 
             store (Storage): Bot storage
 
-            config
+            config (Config): Bot configuration parameters
         """
         self.client = client
         self.store = store
@@ -47,7 +47,7 @@ class Callbacks(object):
             f"{room.user_name(event.sender)}: {msg}"
         )
 
-        # Ignore message if in a public room without command prefix
+        # Is this a command?
         has_command_prefix = msg.startswith(self.command_prefix)
         if has_command_prefix:
             # Remove the command prefix

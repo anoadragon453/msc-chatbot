@@ -6,6 +6,7 @@ latest_db_version = 0
 
 logger = logging.getLogger(__name__)
 
+
 class Storage(object):
     def __init__(self, db_path):
         """Setup the database
@@ -29,12 +30,13 @@ class Storage(object):
         logger.info("Performing initial database setup...")
 
         # Initialize a connection to the database
-        conn = sqlite3.connect(self.db_path)
-        self.cursor = conn.cursor()
+        self.conn = sqlite3.connect(self.db_path)
+        self.cursor = self.conn.cursor()
 
         # Sync token table
         self.cursor.execute("CREATE TABLE sync_token ("
-                            "token TEXT PRIMARY KEY"
+                            "dedupe_id INTEGER PRIMARY KEY, "
+                            "token TEXT NOT NULL"
                             ")")
 
         logger.info("Database setup complete")
@@ -42,10 +44,8 @@ class Storage(object):
     def _run_migrations(self):
         """Execute database migrations"""
         # Initialize a connection to the database
-        conn = sqlite3.connect(self.db_path)
-        self.cursor = conn.cursor()
-
-        pass
+        self.conn = sqlite3.connect(self.db_path)
+        self.cursor = self.conn.cursor()
 
     def get_sync_token(self):
         """Retrieve the next_batch token from the last sync response.
@@ -71,5 +71,6 @@ class Storage(object):
         Args:
             token (str): A next_batch token as part of a sync response
         """
-        self.cursor.execute("INSERT OR REPLACE INTO sync_token"
-                            " (token) VALUES (?)", (token,))
+        self.cursor.execute("INSERT OR REPLACE INTO sync_token "
+                            "(dedupe_id, token) VALUES (1, ?)", (token,))
+        self.conn.commit()
