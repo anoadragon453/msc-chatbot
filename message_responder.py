@@ -42,7 +42,9 @@ class Message(object):
             match_text = match.group()
             msc_num = match_text[3:]
 
-            links.append(f"{self.config.project_url}/issues/{msc_num}")
+            link = f"{self.config.project_url}/issues/{msc_num}"
+            if link not in links:
+                links.append(link)
 
         if links:
             response_content = "\n\n".join(links)
