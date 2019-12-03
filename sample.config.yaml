@@ -35,3 +35,8 @@ logging:
   console_logging:
     # Whether logging to the console is enabled
     enabled: true
+
+# Github-specific options
+github:
+  # The user/repo-name combo of the repository containing MSCs
+  repo_slug: "matrix-org/matrix-doc"

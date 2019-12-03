@@ -37,6 +37,8 @@ async def main():
         config=client_config,
     )
 
+    logger.debug("Connected to Matrix!")
+
     # Assign an access token to the bot instead of logging in and creating a new device
     client.access_token = config.access_token
 

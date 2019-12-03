@@ -35,8 +35,12 @@ class Callbacks(object):
 
             event (nio.events.room_events.RoomMessageText): The event defining the message
         """
+        if event.body.startswith("* "):
+            # This is likely an edit, ignore
+            return
+
         # Extract the message text
-        msg = event.body
+        msg = event.formatted_body or event.body
 
         # Ignore messages from ourselves
         if event.sender == self.client.user:

@@ -70,6 +70,6 @@ class Config(object):
 
         # Github setup
         github = config.get("github", {})
-        self.project_url = github.get(
-            "project_url", "https://github.com/matrix-org/matrix-doc"
+        self.repo_slug = github.get(
+            "repo_slug", "matrix-org/matrix-doc"
         )
