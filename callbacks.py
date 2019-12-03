@@ -35,8 +35,7 @@ class Callbacks(object):
 
             event (nio.events.room_events.RoomMessageText): The event defining the message
         """
-        logger.info("Body: %s", event.body)
-        if event.body.startswith("* "):
+        if event.body.startswith(" * "):
             # This is likely an edit, ignore
             return
 
