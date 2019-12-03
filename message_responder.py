@@ -44,8 +44,7 @@ class Message(object):
         for match in self.msc_number_regex.finditer(self.message_content):
             # Extract issue number from MSC ID
             logger.debug("Got match: %s", match.group(2))
-            match_text = match.group(2)
-            msc_num = int(match_text[3:])
+            msc_num = int(match.group(2))
 
             try:
                 metadata = self.github.get_info_for_issue_pr(msc_num)
