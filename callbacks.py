@@ -7,6 +7,7 @@ from nio import (
     JoinError,
 )
 
+import re
 import logging
 logger = logging.getLogger(__name__)
 
@@ -27,6 +28,8 @@ class Callbacks(object):
         self.config = config
         self.command_prefix = config.command_prefix
 
+        self.reply_regex = re.compile("<mx-reply>.*</mx-reply>")
+
     async def message(self, room, event):
         """Callback for when a message event is received
 
@@ -41,6 +44,9 @@ class Callbacks(object):
 
         # Extract the message text
         msg = event.formatted_body or event.body
+
+        # Discard reply blocks
+        msg = self.reply_regex.sub('', msg)
 
         # Ignore messages from ourselves
         if event.sender == self.client.user:
