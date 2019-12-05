@@ -28,7 +28,7 @@ class Message(object):
         self.event = event
 
         # MSC#### regex
-        self.msc_number_regex = re.compile(r"(^| |\()MSC(\d+)(\)| |$)", flags=re.IGNORECASE)
+        self.msc_number_regex = re.compile(r"(^| |\()MSC(\d+)", flags=re.IGNORECASE)
 
         # Initialize Github object
         self.github = Github(self.config.repo_slug)
