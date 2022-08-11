@@ -1,5 +1,7 @@
 # Nio Template
 
+**LOOK AT https://github.com/matrix-org/maubot-msc-resolver FOR THE MODERN DAY VERSION OF THIS IDEA**
+
 A template for creating bots with
 [matrix-nio](https://github.com/poljar/matrix-nio). The documentation for
 matrix-nio can be found
